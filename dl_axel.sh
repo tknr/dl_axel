@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 export IFS=$'\n'
 DIR=$(cd $(dirname $0); pwd)
 cd $DIR
@@ -30,10 +30,13 @@ do
                 continue
         fi
 
+
+	TARGET_URL=`curl -I -Ls -o /dev/null -w %{url_effective} ${URL}`
+
 	if [ ${#TITLE} = 0 ] ; then
-		axel -a -v -n 10 ${URL} || continue
+		axel -a -v -n 10 ${TARGET_URL} || continue
 	else
-		axel -a -v -n 10 -o ${TITLE} ${URL} || continue
+		axel -a -v -n 10 -o ${TITLE} ${TARGET_URL} || continue
 	fi
 
 	sed -i -e "s|${LINE}|#${LINE}|g" ${FILENAME_QUEUE}
