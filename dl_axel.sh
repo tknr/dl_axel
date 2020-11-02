@@ -12,8 +12,8 @@ echo "reading from "${FILENAME_QUEUE}"..."
 for LINE in `cat ${FILENAME_QUEUE} | grep -v "^#"`
 do
 
-        TITLE=`echo ${LINE} | cut -d "," -f 1`
-	URL=`echo ${LINE} | cut -d "," -f 2`
+        TITLE=`echo ${LINE} | cut -f 1`
+	URL=`echo ${LINE} | cut -f 2`
 
 	if [ ${TITLE} = ${URL} ] ; then 
 		TITLE=''
