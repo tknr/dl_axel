@@ -39,13 +39,6 @@ do
 		TITLE=''
 	fi
 
-
-#	echo ${TITLE}
-#	echo ${URL}
-
-#	echo ${#TITLE}
-#	echo ${#URL}
-
         if [ ${#URL} -lt 2 ] ; then
                 continue
         fi
