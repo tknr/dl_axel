@@ -1,7 +1,5 @@
 #!/bin/bash
 export IFS=$'\n'
-DIR=$(cd $(dirname $0); pwd)
-cd $DIR
 CMDNAME=`basename $0`
 
 FILENAME_QUEUE="queue_axel.txt"
