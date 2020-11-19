@@ -5,12 +5,31 @@ cd $DIR
 CMDNAME=`basename $0`
 
 FILENAME_QUEUE="queue_axel.txt"
-if [ $# -ne 0 ]; then
-    ${FILENAME_QUEUE}=${1}
-fi
-echo "reading from "${FILENAME_QUEUE}"..."
 
 NUM_CONNECTIONS=10
+
+usage_exit() {
+        echo "Usage: ${CMDNAME} [-c num-connections] [-q queue_filename]" 1>&2
+        exit 1
+}
+
+
+while getopts c:q:h OPT
+do
+    case $OPT in
+        c)  NUM_CONNECTIONS=$OPTARG
+            ;;
+        q)  FILENAME_QUEUE=$OPTARG
+            ;;
+        h)  usage_exit
+            ;;
+        \?) usage_exit
+            ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+echo "reading from "${FILENAME_QUEUE}"..."
 
 for LINE in `cat ${FILENAME_QUEUE} | grep -v "^#"`
 do
@@ -23,11 +42,11 @@ do
 	fi
 
 
-	echo ${TITLE}
-	echo ${URL}
+#	echo ${TITLE}
+#	echo ${URL}
 
-	echo ${#TITLE}
-	echo ${#URL}
+#	echo ${#TITLE}
+#	echo ${#URL}
 
         if [ ${#URL} -lt 2 ] ; then
                 continue
