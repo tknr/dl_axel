@@ -29,6 +29,10 @@ shift $(($OPTIND - 1))
 
 echo "reading from "${FILENAME_QUEUE}"..."
 
+mark_finished(){
+        sed -i -e "s|${1}|#${1}|g" ${2}
+}
+
 for LINE in `cat ${FILENAME_QUEUE} | grep -v "^#"`
 do
 
@@ -47,10 +51,8 @@ do
 	TARGET_URL=`curl -I -Ls -o /dev/null -w %{url_effective} ${URL}`
 
 	if [ ${#TITLE} = 0 ] ; then
-		axel -a -v -n ${NUM_CONNECTIONS} ${TARGET_URL} || continue
+		axel -a -v -n ${NUM_CONNECTIONS} ${TARGET_URL} && mark_finished "${LINE}" "${FILENAME_QUEUE}"
 	else
-		axel -a -v -n ${NUM_CONNECTIONS} -o ${TITLE} ${TARGET_URL} || continue
+		axel -a -v -n ${NUM_CONNECTIONS} -o ${TITLE} ${TARGET_URL} && mark_finished "${LINE}" "${FILENAME_QUEUE}"
 	fi
-
-	sed -i -e "s|${LINE}|#${LINE}|g" ${FILENAME_QUEUE}
 done
