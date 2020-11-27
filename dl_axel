@@ -4,7 +4,7 @@ CMDNAME=`basename $0`
 
 FILENAME_QUEUE="queue_axel.txt"
 
-NUM_CONNECTIONS=10
+NUM_CONNECTIONS=16
 
 usage_exit() {
         echo "Usage: ${CMDNAME} [-c num-connections] [-q queue_filename]" 1>&2
